@@ -1,0 +1,81 @@
+--DON'T RUN IF IT DOES NOT EXIST--
+  ALTER TABLE cart_item
+  DROP CONSTRAINT cart_fk;
+--
+  ALTER TABLE cart_item
+  DROP CONSTRAINT cart_fk2;
+--
+  ALTER TABLE payments
+  DROP CONSTRAINT pay_fk;
+--
+--
+--  DROP TABLE customers;
+  DROP TABLE products;
+  DROP TABLE cart_item;
+--  DROP TABLE payments;
+--  DROP TABLE payment_cart;
+
+create Table customers ( email_id NUMBER(20) primary key ,
+                          pass VARCHAR2(20) ,first_name VARCHAR2(10) ,
+                            last_name VARCHAR2(10) )                            
+----------------
+create Table products ( product_id NUMBER(10) primary key ,
+                        product_name VARCHAR(25) NOT NULL , product_model VARCHAR(20) NOT NULL, 
+                        product_price NUMBER(10) NOT NULL, quantity NUMBER(10))
+
+----------------
+create Table cart_item (cart_id NUMBER(10) primary key, payment_id NUMBER(10),product_id NUMBER(10),
+                          total_cost NUMBER(5,2),email_id NUMBER(20),
+                          constraint cart_fk foreign key (product_id) references products (product_id),
+                          constraint cart_fk2 foreign key (email_id) references customers(email_id))
+
+----------------
+create Table payments ( payment_id NUMBER(10) primary key ,
+                          payment_method VARCHAR2(10) , email_id NUMBER(20),
+              constraint pay_fk foreign key (email_id) references customers (email_id))
+----------------
+CREATE TABLE payment_cart (payment_id NUMBER(10),
+                              cart_item NUMBER(5))
+                              
+----------------
+ALTER TABLE payment_cart
+  ADD CONSTRAINT fk_payment_id
+  FOREIGN KEY (payment_id)
+  REFERENCES payments (payment_id)
+  
+----------------
+----------------
+insert into customers( email_id,pass,first_name ,last_name)
+values
+--  (1,'welcome1','abdo','ashraf')
+--  (2,'welcome2','abdo','eldgwy')
+--(3,'welcome3','farag','mousa')
+--(4,'welcome4','mohammed','aboeldahb')
+--(5,'welcome5','menna','mohammed')
+--(6,'welcome6','hana','omar')
+
+insert into cart_item(cart_id ,total_cost , quantity)
+VALUES
+--  (001,200,7)
+--  (002,300,8)
+--  (003,400,9)
+--  (004,500,10)
+--  (005,600,11)
+--  (006,700,12)
+
+insert into products(product_id , product_name , product_price, product_model )
+VALUES
+--  (1001,'food_1',50,'01254')
+--  (1002,'food_2',60,'f01279')
+--  (1003,'book_1',70,'b02134')
+--  (1004,'tools_1',80,'t04254')
+--  (1005,'book_2',90,'b02464')
+--  (1006,'food_3',100,'f01246')
+
+----------------
+----------------
+  select *
+  from cart_item
+  ;
+  
+  
